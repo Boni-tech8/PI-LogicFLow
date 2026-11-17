@@ -1,3 +1,4 @@
+import { authMiddleware } from '../middleware/authMiddleware.js';
 import { Router } from 'express';
 import { z } from 'zod';
 import { prisma } from '../lib/prisma.js';
@@ -5,6 +6,7 @@ import { authenticate } from '../middleware/auth.js';
 
 const router = Router();
 router.use(authenticate);
+router.use(authMiddleware);
 
 router.get('/', async (req, res) => {
   const user = await prisma.user.findUnique({

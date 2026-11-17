@@ -1,9 +1,11 @@
+import { authMiddleware } from '../middleware/authMiddleware.js';
 import { Router } from 'express';
 import { prisma } from '../lib/prisma.js';
 import { authenticate } from '../middleware/auth.js';
 
 const router = Router();
 router.use(authenticate);
+router.use(authMiddleware);
 
 router.get('/', async (req, res) => {
   const [items, unread] = await Promise.all([

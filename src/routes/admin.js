@@ -1,3 +1,4 @@
+import { authMiddleware } from '../middleware/authMiddleware.js';
 import { Router } from 'express';
 import { z } from 'zod';
 import { prisma } from '../lib/prisma.js';
@@ -6,6 +7,7 @@ import { authenticate, requireRole } from '../middleware/auth.js';
 
 const router = Router();
 router.use(authenticate, requireRole('ADMIN'));
+router.use(authMiddleware);
 
 router.get('/reports', async (req, res) => {
   const { status } = z.object({ status: z.enum(['ABERTA', 'PROCEDENTE', 'IMPROCEDENTE']).default('ABERTA') }).parse(req.query);

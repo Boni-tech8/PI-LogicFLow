@@ -1,3 +1,4 @@
+import { authMiddleware } from '../middleware/authMiddleware.js';
 import { Router } from 'express';
 import { z } from 'zod';
 import { prisma } from '../lib/prisma.js';
@@ -7,6 +8,7 @@ import { authenticate } from '../middleware/auth.js';
 
 const router = Router();
 router.use(authenticate);
+router.use(authMiddleware);
 
 const include = {
   demand: { select: { id: true, code: true, title: true, quantity: true, city: true } },

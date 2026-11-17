@@ -1,3 +1,4 @@
+import { authMiddleware } from '../../middleware/authMiddleware.js';
 import * as buscaController from '../controllers/buscaController.js';
 import { Router } from 'express';
 import { authenticate, requireRole } from '../middleware/auth.js';
@@ -7,6 +8,7 @@ const router = Router();
 const confeccaoOnly = requireRole('CONFECCAO');
 
 router.use(authenticate);
+router.use(authMiddleware);
 
 router.get('/', buscaController.buscarDemandas);
 router.get('/minhas', confeccaoOnly, controller.listarMinhas); // antes de /:id
