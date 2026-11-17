@@ -36,6 +36,7 @@ model User {
   reviewsReceived       Review[]       @relation("ReviewTarget")
   reports               Report[]       @relation("Reporter")
   notifications         Notification[]
+  passwordHash String?
 }
 
 model OtpCode {
