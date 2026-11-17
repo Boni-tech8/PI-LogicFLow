@@ -207,3 +207,28 @@ model Notification {
 
   @@index([userId, readAt])
 }
+
+enum TicketStatus {
+  ABERTO
+  EM_ANDAMENTO
+  RESOLVIDO
+  FECHADO
+}
+
+enum TicketPriority {
+  BAIXA
+  MEDIA
+  ALTA
+  CRITICA
+}
+
+model Ticket {
+  id          Int            @id @default(autoincrement())
+  title       String
+  description String
+  priority    TicketPriority @default(MEDIA)
+  category    String         @default("OUTROS")
+  status      TicketStatus   @default(ABERTO)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
