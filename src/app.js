@@ -1,3 +1,4 @@
+import authApiRoutes from './routes/authApi.js';
 import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
@@ -15,5 +16,6 @@ app.use('/uploads', express.static('uploads'));
 app.use(routes);
 app.use((req, res) => res.status(404).json({ error: 'Rota não encontrada' }));
 app.use(errorHandler);
+app.use('/api/auth', authApiRoutes);
 
 export default app;
