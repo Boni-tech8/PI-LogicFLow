@@ -1,3 +1,4 @@
+import { authMiddleware } from '../middleware/authMiddleware.js';
 import { Router } from 'express';
 import multer from 'multer';
 import path from 'node:path';
@@ -19,6 +20,7 @@ const upload = multer({
 });
 
 const router = Router();
+router.use(authMiddleware);
 
 router.post('/', authenticate, upload.array('photos', 5), (req, res) => {
   res.status(201).json({ urls: req.files.map((f) => `${env.PUBLIC_URL}/uploads/${path.basename(f.path)}`) });
