@@ -1,121 +1,101 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
+import { useNavigate, NavLink, Navigate, Routes, Route } from 'react-router-dom'
+import type { ReactNode } from 'react'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+function Login() {
+  const navigate = useNavigate()
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
+    <main style={{ maxWidth: 420, margin: '80px auto', padding: 24 }}>
+      <h1>Logicflow</h1>
+      <p>Entre na sua conta</p>
+
+      <form
+        onSubmit={(event) => {
+          event.preventDefault()
+          navigate('/inicio')
+        }}
+      >
+        <label htmlFor="email">E-mail</label>
+        <input
+          id="email"
+          type="email"
+          required
+          placeholder="seu@email.com"
+          style={{ display: 'block', width: '100%', padding: 12, margin: '8px 0 16px' }}
+        />
+
+        <label htmlFor="senha">Senha</label>
+        <input
+          id="senha"
+          type="password"
+          required
+          placeholder="Sua senha"
+          style={{ display: 'block', width: '100%', padding: 12, margin: '8px 0 16px' }}
+        />
+
+        <button type="submit" style={{ width: '100%', padding: 12 }}>
+          Entrar
         </button>
-      </section>
+      </form>
+    </main>
+  )
+}
 
-      <div className="ticks"></div>
+function NavegacaoInferior() {
+  const linkStyle = ({ isActive }: { isActive: boolean }) => ({
+    color: isActive ? '#2563eb' : '#555',
+    textDecoration: 'none',
+    padding: 12,
+  })
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+  return (
+    <nav style={{ display: 'flex', justifyContent: 'space-around', borderTop: '1px solid #ddd' }}>
+      <NavLink to="/inicio" style={linkStyle}>Início</NavLink>
+      <NavLink to="/demandas" style={linkStyle}>Demandas</NavLink>
+    </nav>
+  )
+}
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+function PaginaInterna({ titulo, children }: { titulo: string; children: ReactNode }) {
+  return (
+    <div style={{ maxWidth: 600, margin: '0 auto', minHeight: '100vh', padding: 20 }}>
+      <header>
+        <h1>Logicflow</h1>
+      </header>
+      <main>
+        <h2>{titulo}</h2>
+        {children}
+      </main>
+      <NavegacaoInferior />
+    </div>
+  )
+}
+
+function Inicio() {
+  return (
+    <PaginaInterna titulo="Início">
+      <p>Bem-vindo ao Logicflow.</p>
+    </PaginaInterna>
+  )
+}
+
+function Demandas() {
+  return (
+    <PaginaInterna titulo="Demandas">
+      <p>Suas demandas aparecerão aqui.</p>
+    </PaginaInterna>
+  )
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/inicio" element={<Inicio />} />
+      <Route path="/demandas" element={<Demandas />} />
+      <Route path="*" element={<Navigate to="/login" replace />} />
+    </Routes>
   )
 }
 
