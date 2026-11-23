@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/LogicFlow
+    username: logicflow
+    password: ${DB_PASSWORD}
