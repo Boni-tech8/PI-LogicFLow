@@ -6,7 +6,7 @@ spring:
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/logicflow_java}
     username: ${DB_USER:postgres}
-    password: ${DB_PASSWORD}
+    password:  ${DB_PASSWORD}
   jpa:
     open-in-view: false
     hibernate:

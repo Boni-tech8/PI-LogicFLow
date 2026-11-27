@@ -1,5 +1,0 @@
-br\com\logicflow\exception\GlobalExceptionHandler.class
-br\com\logicflow\config\CorsConfig.class
-br\com\logicflow\controller\StatusController.class
-br\com\logicflow\LogicflowApiApplication.class
-br\com\logicflow\security\SecurityConfig.class

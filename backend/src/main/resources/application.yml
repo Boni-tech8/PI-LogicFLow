@@ -1,10 +1,14 @@
 server:
-  port: 8081
+  port: ${PORT:8081}
 
 spring:
+  application:
+    name: logicflow-api
+  config:
+    import: "optional:file:../.env[.properties],optional:file:./.env[.properties]"
   datasource:
-    url: jdbc:postgresql://localhost:5433/LogicFlow
-    username: logicflow
+    url: ${DB_URL:jdbc:postgresql://localhost:5433/LogicFlow}
+    username: ${DB_USER:logicflow}
     password: ${DB_PASSWORD}
   flyway:
     enabled: true
@@ -12,7 +16,18 @@ spring:
     baseline-on-migrate: true
     baseline-version: 1
   jpa:
+    open-in-view: false
     hibernate:
       ddl-auto: validate
   jackson:
     time-zone: America/Recife
+
+app:
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration-minutes: ${JWT_EXPIRATION_MINUTES:1440}
+  admin:
+    phone: ${ADMIN_PHONE:}
+    password: ${ADMIN_PASSWORD:}
+  cors:
+    origins: ${CORS_ORIGINS:http://localhost:5173,http://localhost:3000}
