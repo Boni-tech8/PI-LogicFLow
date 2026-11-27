@@ -7,3 +7,7 @@ uploads/
 *.log
 HELP.md
 node_modules/
+
+# Java e Maven
+*.class
+target/
